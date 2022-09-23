@@ -3,9 +3,9 @@ const currentD = moment().format("dddd, LL");
 let currentDay = $("#currentDay");
 currentDay.text(currentD);
 
-let currentTime = moment().format("h a")
-currentDay.text(currentD)
-// console.log(currentD)
+// let currentTime = moment().format("h a")
+// currentDay.text(currentD)
+// // console.log(currentD)
 
 let $9amInput = $('#9am')
 let $10amInput = $('#10am')
@@ -16,6 +16,8 @@ let $2pmInput = $('#2pm')
 let $3pmInput = $('#3pm')
 let $4pmInput = $('#4pm')
 let $5pmInput = $('#5pm')
+let $button = $("button")
+
 
 arrayof$Times = [$9amInput, $10amInput, $11amInput, $12pmInput, $1pmInput, $2pmInput, $3pmInput, $4pmInput, $5pmInput]
 
@@ -35,6 +37,16 @@ for (i=0; i<9; i++) {
 }
 
 
+$button.click(function() {
+   let $currEntry = $(this).siblings("input").val();
+   let localEntry = localStorage.getItem("entry") || "";
+    if ($currEntry) {
+        localStorage.setItem($currEntry)
+    } 
+})
 
+for (i=0; i < arrayof$Times.length; i ++){
+    arrayof$Times[i].val(localStorage.getItem("entry"));
+}
        // if (moment().isAfter("10:00")) {
 //     $9amInput.addClass(".past");
