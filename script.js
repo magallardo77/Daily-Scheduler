@@ -1,52 +1,50 @@
 const currentD = moment().format("dddd, LL");
 // console.log(currentD);
 let currentDay = $("#currentDay");
-currentDay.text(currentD);
-
-// let currentTime = moment().format("h a")
-// currentDay.text(currentD)
-// // console.log(currentD)
-
-let $9amInput = $('#9am')
-let $10amInput = $('#10am')
-let $11amInput = $('#11am')
-let $12pmInput = $('#12pm')
-let $1pmInput = $('#1pm')
-let $2pmInput = $('#2pm')
-let $3pmInput = $('#3pm')
-let $4pmInput = $('#4pm')
-let $5pmInput = $('#5pm')
 let $button = $("button")
-
-
-arrayof$Times = [$9amInput, $10amInput, $11amInput, $12pmInput, $1pmInput, $2pmInput, $3pmInput, $4pmInput, $5pmInput]
+arrayof$Times = [$("#9am"), $("#10am"), $("#11am"), $("#12pm"), $("#1pm"), $("#2pm"), $("#3pm"), $("#4pm"), $("#5pm")];
+arrayof$TimesID = [$("#9am").attr("id"), $("#10am").attr("id"), $("#11am").attr("id"), $("#12pm").attr("id"), $("#1pm").attr("id"), $("#2pm").attr("id"), $("#3pm").attr("id"), $("#4pm").attr("id"), $("#5pm").attr("id")];
 
 currentDay.text(currentD)
-console.log(arrayof$Times[0])
+
+
+// let $9am = $('#9am')
+// let $10am = $('#10am')
+// let $11am = $('#11am')
+// let $12pm = $('#12pm')
+// let $1pm = $('#1pm')
+// let $2pm = $('#2pm')
+// let $3pm = $('#3pm')
+// let $4pm = $('#4pm')
+// let $5pm = $('#5pm')
 
 
 
-for (i=0; i<9; i++) {
-    if (moment("3 PM", 'h A').isAfter(moment("9 AM", 'h A').add(i, 'h'))) {
+// arrayof$TimesID = [$9am, $10am, $11am, $12pm, $1pm, $2pm, $3pm, $4pm, $5pm]
+
+
+
+
+
+for (i=0; i<arrayof$Times.length; i++) {
+    if (moment().hour() > (9+i)) {
         arrayof$Times[i].addClass("past");
-    } else if (moment("3 PM", 'h A').isSame(moment("9 AM", 'h A').add(i, 'h'))) {
+    } else if (moment().hour() == (9+i)) {
         arrayof$Times[i].addClass("present");
-    } else if (moment("3 PM", 'h A').isBefore(moment("9 AM", 'h A').add(i, 'h'))) {
+    } else if (moment().hour() < (9+i)) {
         arrayof$Times[i].addClass("future");
     }
+    arrayof$Times[i].val(localStorage.getItem(arrayof$Times[i]));
 }
 
 
 $button.click(function() {
-   let $currEntry = $(this).siblings("input").val();
-   let localEntry = localStorage.getItem("entry") || "";
-    if ($currEntry) {
-        localStorage.setItem($currEntry)
+   $currEntryAtt = $(this).siblings("").attr("id");
+   $currEntry = $(this).siblings("").val();
+        localStorage.setItem($currEntryAtt, $currEntry)
     } 
-})
+)
 
-for (i=0; i < arrayof$Times.length; i ++){
-    arrayof$Times[i].val(localStorage.getItem("entry"));
-}
-       // if (moment().isAfter("10:00")) {
-//     $9amInput.addClass(".past");
+console.log(moment().hour());
+
+
